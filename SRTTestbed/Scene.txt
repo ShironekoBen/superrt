@@ -1,0 +1,580 @@
+# Floor
+
+Obj 0.0 1.0 0.0
+{
+	Checkerboard 0.2 0.6 0.2 0 
+	Plane 0, 2, 0	0, -1, 0
+
+	# Crater
+	-Sphere 2, 1, 5		2
+	-Sphere 4, 1, 4		2
+	-Sphere 5, 1, 9		4
+	-Sphere 2, 1, 2		3
+	-Sphere -0.5, 1, 2		3
+}
+
+# Water in crater
+
+Obj 0.0 0.0 1 0.6
+{
+	Plane 0, 2.15, 0	0, -1, 0
+}
+
+# Toori
+
+Cull
+{
+	Origin 6, 2, 12	17
+	{
+		Obj 1, 0, 0
+		{
+			Cuboid 1.25, -1.5, 0		0.5, 5, 0.5
+		}
+		Obj 1, 0, 0
+		{
+			Cuboid -1.25, -1.5, 0		0.5, 5, 0.5
+		}
+		Node 0, -4.5, 0
+		{
+			ConvexHull 1, 0, 0
+			{			
+				point -2.0, 0.0, -0.25
+				point 2.0, 0.0, -0.25
+				point -1.75, 0.5, -0.25
+				point 1.75, 0.5, -0.25
+				point -2.0, 0.0, 0.25
+				point 2.0, 0.0, 0.25
+				point -1.75, 0.5, 0.25
+				point 1.75, 0.5, 0.25
+			}
+		}
+		Obj 1, 0, 0
+		{
+			Cuboid 0, -3, 0			3.0, 0.5, 0.5
+		}
+	}
+}
+
+Cull
+{
+	Origin 5.5, 2, 8	17
+	{
+		Obj 1, 0, 0
+		{
+			Cuboid 1.25, -1.5, 0		0.5, 5, 0.5
+		}
+		Obj 1, 0, 0
+		{
+			Cuboid -1.25, -1.5, 0		0.5, 5, 0.5
+		}
+		Node 0, -4.5, 0
+		{
+			ConvexHull 1, 0, 0
+			{			
+				point -2.0, 0.0, -0.25
+				point 2.0, 0.0, -0.25
+				point -1.75, 0.5, -0.25
+				point 1.75, 0.5, -0.25
+				point -2.0, 0.0, 0.25
+				point 2.0, 0.0, 0.25
+				point -1.75, 0.5, 0.25
+				point 1.75, 0.5, 0.25
+			}
+		}
+		Obj 1, 0, 0
+		{
+			Cuboid 0, -3, 0			3.0, 0.5, 0.5
+		}
+	}
+}
+
+Cull
+{
+	Origin 5.5, 2, 16	17
+	{
+		Obj 1, 0, 0
+		{
+			Cuboid 1.25, -1.5, 0		0.5, 5, 0.5
+		}
+		Obj 1, 0, 0
+		{
+			Cuboid -1.25, -1.5, 0		0.5, 5, 0.5
+		}
+		Node 0, -4.5, 0
+		{
+			ConvexHull 1, 0, 0
+			{			
+				point -2.0, 0.0, -0.25
+				point 2.0, 0.0, -0.25
+				point -1.75, 0.5, -0.25
+				point 1.75, 0.5, -0.25
+				point -2.0, 0.0, 0.25
+				point 2.0, 0.0, 0.25
+				point -1.75, 0.5, 0.25
+				point 1.75, 0.5, 0.25
+			}
+		}
+		Obj 1, 0, 0
+		{
+			Cuboid 0, -3, 0			3.0, 0.5, 0.5
+		}
+	}
+}
+
+# Bouncing balls
+
+EditPoint 0
+{
+	Obj 0.5, 0, 1
+	{
+		Sphere 2, -1.5, 12, 0.5
+	}
+}
+
+EditPoint 1
+{
+	Obj 0.5, 0, 1
+	{
+		Sphere 0.75, -1.5, 12, 0.5
+	}
+}
+
+EditPoint 2
+{
+	Obj 0.5, 0, 1
+	{
+		Sphere -0.5, -1.5, 12, 0.5
+	}
+}
+
+EditPoint 3
+{
+	Obj 0.5, 0, 1
+	{
+		Sphere -1.75, -1.5, 12, 0.5
+	}
+}
+
+# Spaceship
+
+Cull
+{
+	Editpoint 10
+	{
+		Origin -2.5, 0.95, 0.5
+		{
+			Node  0, 0, 0 -30
+			{
+				# Body
+				ConvexHull 1 0 0 
+				{
+					Point -0.25, 0, -2
+					Point 0.25, 0, -2
+					Point -1, 0, 0
+					Point 1, 0, 0
+					Point -1, 0, 4
+					Point 1, 0, 4
+					Point -0.5, -1, 0
+					Point 0.5, -1, 0
+					Point -0.5, -0.55, 4
+					Point 0.5, -0.55, 4
+				}
+				# Cockpit
+				ConvexHull 1 1 1 0.5
+				{
+					Point -0.15, 0, -1.8
+					Point 0.15, 0, -1.8
+					Point -0.15, -0.6, -1.4
+					Point 0.15, -0.6, -1.4
+					Point -0.5, 0, 0
+					Point 0.5, 0, 0
+					Point -0.5, -0.95, 0
+					Point 0.5, -0.95, 0
+				}
+				# Rear fin
+				ConvexHull 1 1 0
+				{
+					Point -0.1, 0, 2.5
+					Point 0.1, 0, 2.5
+					Point -0.1, 0, 3.75
+					Point 0.1, 0, 3.75
+					Point 0, -2, 4.5
+				}
+				# Wings
+				Node 0, -0.2, 0
+				{
+					# Left upper wing
+					ConvexHull 1 1 0 
+					{
+						Point 0, 0, 0
+						Point 0, -0.1, 0
+						Point 0, 0, 3
+						Point 0, -0.1, 3
+						Point -3, -1, 4
+					}
+					# Left lower wing
+					ConvexHull 1 1 0 
+					{
+						Point 0, 0, 0
+						Point 0, -0.1, 0
+						Point 0, 0, 3
+						Point 0, -0.1, 3
+						Point -3, 0.25, 4
+					}
+					# Right upper wing
+					ConvexHull 1 1 0 
+					{
+						Point 0, 0, 0
+						Point 0, -0.1, 0
+						Point 0, 0, 3
+						Point 0, -0.1, 3
+						Point 3, -1, 4
+					}
+					# Right lower wing
+					ConvexHull 1 1 0 
+					{
+						Point 0, 0, 0
+						Point 0, -0.1, 0
+						Point 0, 0, 3
+						Point 0, -0.1, 3
+						Point 3, 0.25, 4
+					}
+				}
+			}
+		}
+	}
+}
+
+# House
+
+Cull
+{
+	Node -11, 2, -1	45
+	{
+		# Main body
+		Obj 1 0 0
+		{
+			Cuboid 0, 0, 0		4, 6, 8
+		}
+	
+		# Roof
+		Node 0, -4, 0
+		{
+			ConvexHull 0.6 0.9 0.6
+			{
+				# Prism shape
+				point -2.25, 1, -4.25
+				point 2.25, 1, -4.25
+				point 0, -1, -4.25
+				point -2.25, 1, 4.25
+				point 2.25, 1, 4.25
+				point 0, -1, 4.25
+			}
+		}
+	
+		# Chimney
+		Obj 1 0 0
+		{
+			Cuboid 0.5, -5, -3.5	0.75, 2.5, 0.75
+		}
+	
+		# Windows
+		Obj 1 1 1 0.2
+		{
+			Cuboid 2, -1.5, 2.5	0.1, 1.5, 1
+			&Sphere 2, -1.5, 2.5,	0.5
+		}
+
+		Obj 1 1 1 0.2
+		{
+			Cuboid 2, -1.5, 0.0	0.1, 1.5, 1
+			&Sphere 2, -1.5, 0.0,	0.5
+		}
+		# Door
+		Obj 1 1 0
+		{
+			Cuboid 2, -1.0, -2.5	0.2, 2.0, 1
+		}
+		# Doorknob
+		#Obj 1 1 1
+		#{
+		#	Sphere 2.12, -0.9, -2.9	0.05
+		#}
+	}
+}
+
+# Concave sphere
+
+Cull
+{
+	Origin 8, 0, -2
+	{
+		Node 0, 0, 0 45
+		{
+			Obj 1 1 1 0.8
+			{
+				Sphere 0, 0, 0		2
+				-Sphere -1.5, 0, 0 	2.5
+			}
+		}
+	}
+}
+
+# Reflective cube
+
+Cull
+{
+	Origin 2, -0.75, -15
+	{
+		Node 0, 0, 0		0, 15, 50
+		{
+		
+			EditPoint 5
+			{
+				Obj 1 1 1 0.8
+				{
+					Cuboid 0, 0, 0		2, 2, 2
+					#-Sphere -0.5, 0.75, 0 	.5
+				}
+			}
+		}
+	}
+}
+
+# Lots of spheres
+
+Cull
+{
+	Node 7, 0, -6
+	{
+		Obj 1 0 1 0.2
+		{
+			Sphere 0, 0, 0		1
+			Sphere 0, 2.5, 0	1
+			Sphere 0, -2.5, 0	1
+			Sphere 2.5, 0, 0	1
+			Sphere 2.5, 2.5, 0	1
+			Sphere 2.5, -2.5, 0	1
+		}
+	}
+}
+
+# Pillars
+
+Cull
+{
+	Node -2.5, 1, -11.75 	50
+	{
+		Node 0, 0, 0 25
+		{
+			Obj 1 0 1 0.2
+			{
+				ConvexHull 0.6 0.9 0.6
+				{
+					point -1.25, 1, -1.25
+					point 1.25, 1, -1.25
+					point 0, -6, -4.25
+					point -1.25, 1, 1.25
+					point 1.25, 1, 1.25
+				}
+			}
+		}
+		Node -6, 0, 0 -25
+		{
+			Obj 1 0 1 0.2
+			{
+				ConvexHull 0.6 0.9 0.6
+				{
+					point -1.25, 1, -1.25
+					point 1.25, 1, -1.25
+					point 0, -6, -4.25
+					point -1.25, 1, 1.25
+					point 1.25, 1, 1.25
+				}
+			}
+		}
+		Node 0, 0, -6 25
+		{
+			Obj 1 0 1 0.2
+			{
+				ConvexHull 0.6 0.9 0.6
+				{
+					point -1.25, 1, -1.25
+					point 1.25, 1, -1.25
+					point 0, -6, -4.25
+					point -1.25, 1, 1.25
+					point 1.25, 1, 1.25
+				}
+			}
+		}
+		Node -6, 0, -6 -25
+		{
+			Obj 1 0 1 0.2
+			{
+				ConvexHull 0.6 0.9 0.6
+				{
+					point -1.25, 1, -1.25
+					point 1.25, 1, -1.25
+					point 0, -6, -4.25
+					point -1.25, 1, 1.25
+					point 1.25, 1, 1.25
+				}
+			}
+		}
+		Node -3, -4, -3 10, -25, 0
+		{
+			Obj 1 0 0 	0.5
+			{
+				Sphere 0, 0, 0	1
+				-Plane 0, 0, 0 	0, 0, -1
+			}
+		}		
+	}
+}
+
+# Weird cube artifact
+
+Cull
+{
+	Origin -3, 0.5, -8
+	{
+		Cull
+		{
+			Node 0, 1.75, 0
+			{
+				Obj 0 1 0 0.3
+				{
+					Cuboid 0, 0, 0 	1, 1, 1
+				}
+			}
+	
+			Node 0, 1.75, 0	45
+			{
+				Obj 0 1 0 0.3
+				{
+					Cuboid 0, 0, 0 	1, 1, 1
+				}
+			}
+	
+			Node 0, 1.5, 0 30
+			{
+				Obj 0 1 0 0.3
+				{
+					Cuboid 0, 0, 0 	0.75, 1, 0.75
+				}
+			}
+	
+			Node 0, 1.5, 0	75
+			{
+				Obj 0 1 0 0.3
+				{
+					Cuboid 0, 0, 0 	0.75, 1, 0.75
+				}
+			}
+		}
+
+		Cull
+		{
+			Node 0, 0, 0		60, 45, 15
+			{
+				# Casing
+			
+				EditPoint 4
+				{
+					Obj 1 0.2 0.2
+					{		
+						Cuboid	0, 0, 0		1, 1, 1
+						-Sphere 0, 0, 0		0.65
+					}
+				}
+			
+				# Inner sphere
+				Obj 1 1 1 0.7
+				{
+					Sphere 0, 0, 0,		0.4
+				}
+			}
+		}
+
+		# Pillars
+		Node 1.5, 0, 0	0
+		{
+			Obj 1 1 0 0.05
+			{
+				Cuboid 0, 1, 0 	0.2, 4, 0.2
+				Sphere 0, -1, 0  0.25
+				-Plane 0, -1, 0 0, 1, 0
+			}
+		}
+		Node -1.5, 0, 0	0
+		{
+			Obj 1 1 0 0.05
+			{
+				Cuboid 0, 1, 0 	0.2, 4, 0.2
+				Sphere 0, -1, 0  0.25
+				-Plane 0, -1, 0 0, 1, 0
+			}
+		}
+		Node 0, 0, -1.5	0
+		{
+			Obj 1 1 0 0.05
+			{
+				Cuboid 0, 1, 0 	0.2, 4, 0.2
+				Sphere 0, -1, 0  0.25
+				-Plane 0, -1, 0 0, 1, 0
+			}
+		}
+		Node 0, 0, 1.5	0
+		{
+			Obj 1 1 0 0.05
+			{
+				Cuboid 0, 1, 0 	0.2, 4, 0.2
+				Sphere 0, -1, 0  0.25
+				-Plane 0, -1, 0 0, 1, 0
+			}
+		}
+	}
+}
+
+
+# Subtractive column
+
+Cull
+{
+	Node 3, 2, -8	-60
+	{		
+		ConvexHull 1.0 0.0 0.0
+		{
+			point -1, 0, -0.1
+			point 1, 0, -0.1
+			point -1, 0, 0.1
+			point 1, 0, 0.1
+			point -1, -2, -0.1
+			point 1, -2, -0.1
+			point -1, -2, 0.1
+			point 1, -2, 0.1
+			point 0, -3, 0
+			EditPoint 6
+			{
+				-Sphere -1, -2, 0 	0.5
+			}
+			EditPoint 7
+			{
+				-Sphere 0.75, -2, 0 	0.5
+			}
+			EditPoint 8
+			{
+				-Sphere 0.2, -2, 0 	0.5
+			}
+			EditPoint 9
+			{
+				-Sphere -0.15, -2, 0 	0.5
+			}
+		}		
+		Obj 1 1 1 0.25
+		{			
+			Sphere 0, 0, 0	1.5
+			-Plane 0, -0.5, 0	0, 1, 0
+		}
+	}
+}

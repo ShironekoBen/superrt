@@ -1,0 +1,111 @@
+diff --git a/libSFX.make b/libSFX.make
+index 2dfae2761b38c794aec2ece93ad66da34a3a8df1..c12a91e1d8421ef9227d0e90432ca97af5be8ec5 100644
+--- a/libSFX.make
++++ b/libSFX.make
+@@ -12,7 +12,7 @@ debug		:= 0
+ endif
+ 
+ # Output
+-rom		:= $(name).sfc
++rom		?= $(name).sfc
+ 
+ # Default rule
+ .SUFFIXES:
+@@ -80,18 +80,10 @@ map_flags       := -v
+ 
+ 
+ # Include all source files under working directory if $(src) isn't set
+-ifndef src
+-src		:= $(call rwildcard, ,%.s)
+-endif
+-ifndef src_smp
+-src_smp		:= $(call rwildcard, ,%.s700)
+-endif
+-ifndef src_gsu
+-src_gsu		:= $(call rwildcard, ,%.sgs)
+-endif
+-ifndef headers
+-headers		:= $(call rwildcard, ,%.i) $(call rwildcard, ,%.i700)
+-endif
++src			?= $(call rwildcard, ,%.s)
++src_smp		?= $(call rwildcard, ,%.s700)
++src_gsu		?= $(call rwildcard, ,%.sgs)
++headers		?= $(call rwildcard, ,%.i) $(call rwildcard, ,%.i700)
+ 
+ # libSFX
+ libsfx_src	:= $(wildcard $(libsfx_inc)/CPU/*.s)
+diff --git a/include/Configurations/Map.cfg b/include/Configurations/Map.cfg
+index 456782fa78415e412fef1125eebd15a9a0713600..f17ce0b3423c1880c78e23190a1b94e2a9ae4003 100644
+--- a/include/Configurations/Map.cfg
++++ b/include/Configurations/Map.cfg
+@@ -20,7 +20,10 @@ MEMORY {
+     HIRAM:      start = $7e2000,    size = $e000, define = yes;
+     EXRAM:      start = $7f0000,    size = $10000, define = yes;
+ 
+-    ROM0:       start = $808000,    size = $8000, fill = yes, fillval = $ff;
++    # SuperRT mod - use bottom 16K for SRT mapped area
++    SRTIO:      start = $808000,    size = $4000, fill = yes, fillval = $ff;
++    ROM0:       start = $80C000,    size = $4000, fill = yes, fillval = $ff;
++    #ROM0:       start = $808000,    size = $8000, fill = yes, fillval = $ff;
+     ROM1:       start = $818000,    size = $8000, fill = yes, fillval = $ff;
+     ROM2:       start = $828000,    size = $8000, fill = yes, fillval = $ff;
+     ROM3:       start = $838000,    size = $8000, fill = yes, fillval = $ff;
+@@ -35,11 +38,14 @@ SEGMENTS {
+     ZPAD:       load = ZPAD,        type = zp,  optional = yes;
+     ZNMI:       load = ZNMI,        type = zp,  optional = yes;
+     ZEROPAGE:   load = ZPAGE,       type = zp,  optional = yes;
++    # SuperRT mod - segment for WRAM functions
++    WRAMFUNCS:  load = LORAM,       type = bss, optional = yes;
+     BSS:        load = LORAM,       type = bss, optional = yes;
+     LORAM:      load = LORAM,       type = bss, optional = yes;
+     HIRAM:      load = HIRAM,       type = bss, optional = yes;
+     EXRAM:      load = EXRAM,       type = bss, optional = yes;
+ 
++    SRT:        load = SRTIO,       type = ro;
+     CODE:       load = ROM0,        type = ro;
+     RODATA:     load = ROM0,        type = ro;
+     LIBSFX:     load = ROM0,        type = ro, optional = yes;
+diff --git a/include/CPU/Runtime.s b/include/CPU/Runtime.s
+index 90cc3a7b1220bc98b84e4f5cd563561b2ffa2c71..20a342e03b852b2004866922cb4224334e2ddf00 100644
+--- a/include/CPU/Runtime.s
++++ b/include/CPU/Runtime.s
+@@ -72,8 +72,9 @@ VBlankVector:
+         RW a8
+         dbank   $80
+         lda     RDNMI                   ;Clear NMI
+-        lda     #inidisp(OFF, DISP_BRIGHTNESS_MIN)
+-        sta     INIDISP
++        ; SuperRT - don't try to muck around with INIDISP
++        ;lda     #inidisp(OFF, DISP_BRIGHTNESS_MIN)
++        ;sta     INIDISP
+ 
+ .if SFX_AUTO_READOUT_FIRST = NO
+         jsl     SFX_nmi_jml             ;Call trampoline
+@@ -138,8 +139,9 @@ VBlankVector:
+         lda     z:SFX_nmitimen          ;Set IRQ flags
+         sta     NMITIMEN
+ 
+-        lda     z:SFX_inidisp           ;Restore screen and return
+-        sta     INIDISP
++        ; SuperRT - don't try to muck around with INIDISP
++        ;lda     z:SFX_inidisp           ;Restore screen and return
++        ;sta     INIDISP
+ 
+         pull
+ 
+diff --git a/include/CPU_Runtime.i b/include/CPU_Runtime.i
+index 45ea446d2552df944e18c4b681f0069cbc31a01d..c625cc65cc22d63ad2b74c67804569e2823aeb4c 100644
+--- a/include/CPU_Runtime.i
++++ b/include/CPU_Runtime.i
+@@ -255,8 +255,9 @@
+ */
+ .macro  CPU_init
+         RW_push set:a8
+-        lda     #MEM_358_MHZ            ;Set 3.58MHz access cycle
+-        sta     MEMSEL
++        ; Hack - disable FASTROM
++        ;lda     #MEM_358_MHZ            ;Set 3.58MHz access cycle
++        ;sta     MEMSEL
+         RW a16i16
+         ldx     #$1fff                  ;Set stack at $1fff
+         txs
