@@ -4,8 +4,8 @@
 
 This is an experimental expansion chip for the Super Nintendo that adds real-time ray-tracing support to the console. You can find some more details in text form on my [website](https://www.shironekolabs.com/posts/superrt/) and in this [overview video](https://www.youtube.com/watch?v=2jee4tlakqo).
 
-This repository contains all of the source code for the chip and supporting tools. It's very much a "proof-of-concept" level implementation, lacking many features that would be desirable for any practical application beyond simple demos!
-It's also "my first Verilog project", so the quality of the code is fairly suspect in places - please don't assume that anything I've done here represents any kind of best-practice (or is even a good idea...).
+This repository contains all of the source code for the chip and supporting tools. It's very much a "proof-of-concept" level implementation, lacking many features that would be desirable for any practical application beyond simple demos.
+It's also "my first Verilog project", so the quality of the code is fairly suspect in places - please don't assume that anything I've done here represents any kind of best practice (or is even a good idea...)!
 
 If you're looking to get this working then there are a number of steps involved, not least of which is building the necessary hardware.
 
@@ -17,9 +17,9 @@ The wiring details look like this:
 
 ### GPIO pins
 
-Pins here are given in the logical direction of the data flow (i.e. A0 -> GP0 indicating that address data goes from the SNES to the SuperRT chip).
+Pins here are given in the logical direction of the data flow (i.e. A0 -> GP0 indicates that address data goes from the SNES to the SuperRT chip).
 
-The level shifter chips is used are `SN74ALVC164245`s - two are required. Each chip has two banks (1 and 2), the direction of which can be independently configured. The SuperRT prototype uses them as follows:
+The level shifter chips used are `SN74ALVC164245` - two are required. Each chip has two banks (1 and 2), the direction of which can be independently configured. The SuperRT prototype uses them as follows:
 
 ```
 LS1 bank 1: A -> B, enabled only when required by GP16 (data bus from DE10-Nano to SNES)
@@ -78,7 +78,7 @@ GP11    -> 1A5  :LS1: 1B5  -> D3
 GP12    -> 1A6  :LS1: 1B6  -> D4
 GP13    -> 1A7  :LS1: 1B7  -> D5
 GP14    -> 1A8  :LS1: 1B8  -> D6
-GP15 -   > 1A1  :LS1: 1B1  -> D7
+GP15    -> 1A1  :LS1: 1B1  -> D7
 
 [ROM access control]
 
@@ -146,13 +146,13 @@ These instructions assume you are running Windows, but I think all the requisite
 ### Demo controls
 
 You can navigate the scene with the D-pad and `L`/`R` (to strafe) and `X`/`A` to move up and down. Holding `Y` allows the light source to be moved with the D-Pad.
-Start toggles the debug overlay display.
+`Start` toggles the debug overlay display.
 
 ### Code notes
 
 The `config.sv` file contains some defines that affect the synthesized design. Most notably, `ENABLE_EXECUTION_UNIT_1` and `ENABLE_EXECUTION_UNIT_2` enable the second and third execution cores respectively. These are on by default, but turning them off both improves synthesis time and to an extent timing stability, but with an obvious impact on speed (there are definitely some dubious things going on timing-wise in three core mode and making unrelated changes can sometimes cause visual noise).
 
-> Timing in general are a bit all-over-the-place in this project. Some constraints are set and the newer code is generally (moderately) "timing clean", but some of the older components have a lot of black magic "here's a multi-cycle logic chain where I just tweaked things until I stopped getting visible errors" parts. I apologise deeply to anyone who has to modify those!
+> Timings in general are a bit all-over-the-place in this project. Some constraints are set and the newer code is generally (moderately) "timing clean", but some of the older components have a lot of black magic "here's a multi-cycle logic chain where I just tweaked things until I stopped getting visible errors" parts. I apologise deeply to anyone who has to modify those!
 
 `config.sv` also includes the `ENABLE_DEBUG_DISPLAY` switch, which turns on debug output to an HDMI display. This is off by default partly because the design won't fit if it and all three execution cores are enabled, and also partly because it requires some I2C driver code from Terasic which is under a different license. If you want to enable it, you'll need to get `I2C_Controller.v`, `I2C_HDMI_Config.v` and `I2C_WRITE_WDATA.v` from the [VGAHDMI example](https://github.com/nhasbun/de10nano_vgaHdmi_chip) project or the original Terasic samples and add them to the project.
 
