@@ -186,6 +186,10 @@ The buttons at the bottom of the window are:
 * `Pal regen` - walk (literally!) through the scene taking screenshots from multiple angles and then generate an optimised palette based on that. *Note that the render display will flash a lot whilst this is happening.*
 * `Write data` - write the data files (compiled command list, palette, etc) for the SNES to use.
 
+## Getting in touch
+
+You can get in touch with me via e-mail at contact _at-sign_ shironekolabs _dot_ com.
+
 ## License
 
 See the `LICENSE` file for full details.
