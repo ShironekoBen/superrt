@@ -11,7 +11,9 @@ If you're looking to get this working then there are a number of steps involved,
 
 ## Hardware
 
-The system uses a DE10-Nano board with a Cyclone-V FPGA interfaced to the SNES cartridge bus via two `74ALVC164245` level shifter ICs connected to the FPGA's GPIO pins. The wiring details look like this:
+The system uses a DE10-Nano board with a Cyclone-V FPGA interfaced to the SNES cartridge bus via two `74ALVC164245` level shifter ICs connected to the FPGA's GPIO pins. Hardware isn't really my speciality, so this setup may be sub-optimal - and I offer no guarantees that it won't fry your system or something equally terrible should you decide to build it - but it "works on my machine".
+
+The wiring details look like this:
 
 ### GPIO pins
 
@@ -125,7 +127,7 @@ These instructions assume you are running Windows, but I think all the requisite
 * Make ([GNU make for Windows](http://gnuwin32.sourceforge.net/packages/make.htm) or similar), either on the path or in `SRT-SNES\Tools\Make\bin`
 * [SRecord 1.64](http://srecord.sourceforge.net/download.html) placed in `SRT\Tools\srecord`
 * [Quartus Prime 18.1](https://fpgasoftware.intel.com/18.1/?edition=standard) installed with Cyclone-V support
-* [libSFX](https://github.com/Optiroc/libSFX/) - I used [this specific version](https://github.com/Optiroc/libSFX/tree/754993beb65540cae2c0f80f7debbb992a053e92) although I suspect that the latest version will work. This needs to be placed in `SRT-SNES\External\libSFX` and then patched as per the first step in the building instructions below.
+* [libSFX](https://github.com/Optiroc/libSFX/) - I used [this specific version](https://github.com/Optiroc/libSFX/tree/754993beb65540cae2c0f80f7debbb992a053e92) although I suspect that the latest version will also work. This needs to be placed in `SRT-SNES\External\libSFX` and then patched as per the first step in the building instructions below.
 * [SharpDX](https://github.com/sharpdx/SharpDX) for the testbed tool (this is configured as a NuGet package in the solution, so you shouldn't need to get it manually).
 * [Visual Studio](https://visualstudio.microsoft.com/) 2017 or newer to build the testbed tool.
 
@@ -136,14 +138,14 @@ These instructions assume you are running Windows, but I think all the requisite
 3) Hit the `PAL Regen` button and wait for it to complete (warning: this will display flickering images on the output window as it executes).
 4) Click `Write data` and then close the testbed.
 5) Run `make` in `SRT-SNES`. This should generate an `SRTTest.sfc` file in `SRT-SNES/Binaries`.
-6) Open the SRT folder, and run the `ConvertData.bat` batch file. This will generate `.mif` files for the various binaries involved.
-7) Open the SRT project file in Quartus and hit `start compilation`.
+6) Open the `SRT` folder, and run the `ConvertData.bat` batch file. This will generate `.mif` files for the various binaries involved.
+7) Open the `SRT.qpf` project file in Quartus and hit `start compilation`.
 8) Once compilation completes, launch the programmer and download `output_files/SRT.sof` to the Cyclone V on the DE10-Nano board.
 9) Turn on the SNES and the SuperRT test/demo app should boot.
 
 ### Demo controls
 
-You can navigate the scene with the D-pad and L/R (to strafe) and X/A to move up and down. Holding Y allows the light source to be moved with the D-Pad.
+You can navigate the scene with the D-pad and `L`/`R` (to strafe) and `X`/`A` to move up and down. Holding `Y` allows the light source to be moved with the D-Pad.
 Start toggles the debug overlay display.
 
 ### Code notes
@@ -165,7 +167,7 @@ For command list data writes, the auto-increment is turned off, and instead a de
 
 ### Testbed controls
 
-In the testbed the camera can be moved with WASD, and rotated with Q and E. R and F move vertically (if keyboard controls don't work, try clicking on the render view first).
+In the testbed the camera can be moved with `WASD`, and rotated with `Q` and `E`. `R` and `F` move vertically (if keyboard controls don't work, try clicking on the render view first).
 
 Clicking a pixel will set it for debugging and show trace output from the execution of that pixel in the panel below.
 
@@ -186,7 +188,7 @@ The buttons at the bottom of the window are:
 
 ## License
 
-See the LICENSE file for full details.
+See the `LICENSE` file for full details.
 
 The SuperRT code is licensed under the MIT license.
 
