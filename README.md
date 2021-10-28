@@ -58,7 +58,7 @@ A4      -> 2B4  :LS1: 2A4  -> GP4
 A5      -> 2B3  :LS1: 2A3  -> GP5
 A6      -> 2B7  :LS2: 2A7  -> GP6
 A7      -> 2B1  :LS1: 2A1  -> GP7
-A8      -> 1B3  :LS1: 1A3  -> GP19
+A8      -> 1B3  :LS2: 1A3  -> GP19
 A9      -> 1B4  :LS2: 1A4  -> GP20
 A10     -> 1B5  :LS2: 1A5  -> GP21
 A11     -> 1B6  :LS2: 1A6  -> GP22
@@ -97,7 +97,7 @@ GP16    -> 1OE :LS1
 
 Source	   Level shifter
 
-+3.3v   -> 1DIR:LA1
++3.3v   -> 1DIR:LS1
 Gnd     -> 2DIR:LS1
 Gnd     -> 2OE :LS1
 Gnd     -> 1DIR:LS2
